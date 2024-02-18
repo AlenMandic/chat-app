@@ -1,0 +1,121 @@
+body {
+  background-color: rgb(105, 96, 96);
+  margin: 10px;
+  padding-bottom: 3rem;
+  font-family: sans-serif;
+}
+
+#form {
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 3rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+}
+
+#input {
+  border: none;
+  padding: 0 1rem;
+  flex-grow: 1;
+  border-radius: 5px;
+  margin: 0.25rem;
+}
+
+.chat-room {
+  height: 575px;
+  width: 100%;
+  word-wrap: break-word;
+  border: solid 1px black;
+  background-color: lightblue;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.chat-room > * {
+  padding: 10px;
+}
+
+#joined-room {
+  margin-left: 10px;
+}
+
+#user-connected {
+  color: #0a470a;
+  margin-left: 10px;
+}
+
+#user-disconnected {
+  color: red;
+  margin-left: 10px;
+}
+
+#input:focus {
+  outline: none;
+}
+
+.form > button {
+  border: solid 1px black;
+  font-size: 18px;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  color: black;
+  width: 120px;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#messages > li {
+  padding: 0.5rem 1rem;
+}
+
+#title-select {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.room-selector {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 15px;
+  font-size: 16px;
+  width: 170px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: black;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.arrow::before {
+  content: "\25BC";
+  font-size: 20px;
+  color: #333;
+}

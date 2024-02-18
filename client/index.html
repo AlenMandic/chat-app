@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Socket.IO chat</title>
+  </head>
+  <body>
+    <h2 id="concurrent-users"></h2>
+    <div class="chat-room" id="chat-room">
+      <h2 id="channel-title"></h2>
+      <div id="title-select">
+        <h3>Join a different channel</h3>
+        <div class="room-selector">
+          <select id="roomDropdown">
+            <option value="General chat" selected>General chat</option>
+            <option value="Programming">Programming</option>
+            <option value="Football">Football</option>
+            <option value="Discussions">Discussions</option>
+          </select>
+          <div class="arrow"></div>
+        </div>
+      </div>
+      <ul id="messages"></ul>
+    </div>
+    <form id="form" class="form" action="">
+      <input id="input" class="long-input" autocomplete="off" /><button
+        id="send-button"
+      >
+        Send
+      </button>
+    </form>
+
+    <!--First script tag loads in the actual socket.io client-side library, and exposes the 'io' global variable for use. io()-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/utils.js" type="module"></script>
+    <script src="/socket.js" type="module"></script>
+  </body>
+</html>
