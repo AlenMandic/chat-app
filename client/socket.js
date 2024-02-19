@@ -9,13 +9,22 @@ const chatRoom = document.getElementById("chat-room");
 const concurrentUsers = document.getElementById("concurrent-users");
 const selectChannel = document.getElementById('roomDropdown')
 const channelTitle = document.getElementById('channel-title');
+
 channelTitle.textContent = selectChannel.value;
 
 const username = getUsername();
 
 socket.emit('join-set-username', { username });
 
-joinRoom(socket, messages, selectChannel.value); // join default chat room
+async function getMessages(currentRoom) {
+  const db_messages = await joinRoom(socket, messages, currentRoom);
+
+  db_messages.forEach(message => {
+    messages.appendChild(message);
+  });
+}
+
+getMessages(selectChannel.value); // get messages for the current room.
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -29,16 +38,15 @@ form.addEventListener('submit', (e) => {
     setTimeout(() => {
       chatRoom.scrollTop = chatRoom.scrollHeight;
     }, 10);
-    sendButton.disabled = true;
-    setTimeout(() => (sendButton.disabled = false), 3000);
+    //sendButton.disabled = true;
+    //setTimeout(() => (sendButton.disabled = false), 3000);
   }
-
 });
 
 selectChannel.addEventListener('change', function () {
   const selectedRoom = selectChannel.value;
   channelTitle.textContent = selectedRoom;
-  joinRoom(socket, messages, selectedRoom); // change into a different chatroom
+  getMessages(selectedRoom); // get messages for the selected room.
 });
 
 socket.on('concurrent-users', (data) => {
@@ -62,6 +70,9 @@ socket.on('chat message', (msg) => {
   const messageItem = document.createElement("li");
   messageItem.textContent = `[ ${displayCurrentTime()} ] ${msg}`;
   messages.appendChild(messageItem);
+  setTimeout(() => {
+    chatRoom.scrollTop = chatRoom.scrollHeight;
+  }, 50);
 });
 
 socket.on('joined-room', (msg) => {

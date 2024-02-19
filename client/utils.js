@@ -15,10 +15,25 @@ export function displayCurrentTime() {
     return currentTime;
   }
 }
+
 // this function should clear out existing messages, switch to the selected room channel and fetch/load in current messages for that channel
 export function joinRoom(websocket, messagesElement, roomName) {
   messagesElement.innerHTML = null;
   websocket.emit('join-room', roomName);
+
+  return new Promise((resolve) => {
+    websocket.on('messages', (messages) => {
+
+      const domMessages = messages.map((message) => {
+
+        const messageElement = document.createElement('li');
+        const messageTimestamp = message.timestamp.slice(0, -3);
+        messageElement.innerText = `[ ${messageTimestamp} ] ${message.username}: ${message.message}`;
+        return messageElement;
+      })
+       resolve(domMessages)
+    })
+  })
 }
 
 // get and set a username for the chat

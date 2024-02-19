@@ -4,7 +4,12 @@ const { join } = require('node:path');
 const { Server } = require('socket.io');
 const morgan = require('morgan')
 
+const sqlite3 = require('sqlite3').verbose();
+const queries = require('./queries.js');
+
 require('dotenv').config()
+
+const dbPath = process.env.DB_PATH
 
 const app = express();
 const server = createServer(app); // Creates a new server instance based on our express app, we can then listen on this server port.
@@ -26,6 +31,16 @@ app.get('/', (req, res) => {
 });
 
 const connectedUsers = new Set();
+
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('Error connecting to the database file: ', err.message);
+    } else {
+        console.log(`Connected to the SQLite database: ${dbPath}`);
+        // create the initial DB table if it doesn't already exist, for storing messages.
+        db.run(queries.createMessagesTable);
+    }
+});
 
 io.on('connection', (socket) => {
 
@@ -50,11 +65,17 @@ io.on('connection', (socket) => {
         socket.leave(socket.room);
         socket.join(roomName); // switch rooms/channels
         socket.room = roomName;
+
+        const updatedMessages = getMessages(roomName);
+        updatedMessages.then((messages) => {
+            socket.emit('messages', messages);
+        })
         socket.emit('joined-room', `You have joined the room: ${roomName}`);
     })
 
     socket.on('chat message', (msg) => {
-       io.to(socket.room).emit('chat message', `${username} : ${msg}`);
+        io.to(socket.room).emit('chat message', `${username} : ${msg}`);
+        insertMessage(socket.room, username, msg); // save message to db.
     })
 
     socket.on('disconnect', () => {
@@ -63,6 +84,68 @@ io.on('connection', (socket) => {
         io.emit('concurrent-users', connectedUsers.size);
     });
 })
+
+async function insertMessage(room, username, message) {
+
+    try {
+        // if there's 20 or more messages stored per room, delete oldest message whenever a new message is received.
+        const countTotalMessages = await new Promise((resolve, reject) => {
+            db.get(queries.countTotalMessagesByRoom, [room], (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+
+        console.log('countTotalMessages: ', countTotalMessages);
+
+        const messageCount = countTotalMessages.count;
+
+        if (messageCount >= 20) {
+            deleteOldestMessage(room);
+        }
+        // once the deleting of oldest message is resolved, attempt to insert message into db
+        await new Promise((resolve, reject) => {
+            db.run(queries.insertMessage, [room, username, message], (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+
+        console.log('saving new message to db: ', room, username, message);
+
+    } catch (err) {
+        console.log('Error:', err);
+    }
+}
+
+function deleteOldestMessage(room) {
+    db.run(queries.deleteOldestMessage, [room], (err) => {
+        console.log('deleting oldest message in: ', room)
+        if (err) {
+            console.log('Couldnt delete message from db', err)
+        }
+    });
+}
+
+function getMessages(room) {
+    return new Promise((resolve, reject) => {
+        db.all(queries.getMessages, [room], (err, rows) => {
+            if (err) {
+                console.log('couldnt get all messages for a room', err)
+                reject(err);
+            } else {
+                console.log('retreiving all messages for: ', room)
+                resolve(rows.reverse());
+            }
+        });
+    });
+}
 
 // our server is now listening for incoming websocket requests
 server.listen(process.env.PORT || 3003, () => {

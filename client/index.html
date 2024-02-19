@@ -7,24 +7,24 @@
   </head>
   <body>
     <h2 id="concurrent-users"></h2>
+    <div id="title-select">
+      <h3>Join a different channel</h3>
+      <div class="room-selector">
+        <select id="roomDropdown">
+          <option value="General chat" selected>General chat</option>
+          <option value="Programming">Programming</option>
+          <option value="Football">Football</option>
+          <option value="Discussions">Discussions</option>
+        </select>
+        <div class="arrow"></div>
+      </div>
+    </div>
     <div class="chat-room" id="chat-room">
       <h2 id="channel-title"></h2>
-      <div id="title-select">
-        <h3>Join a different channel</h3>
-        <div class="room-selector">
-          <select id="roomDropdown">
-            <option value="General chat" selected>General chat</option>
-            <option value="Programming">Programming</option>
-            <option value="Football">Football</option>
-            <option value="Discussions">Discussions</option>
-          </select>
-          <div class="arrow"></div>
-        </div>
-      </div>
       <ul id="messages"></ul>
     </div>
     <form id="form" class="form" action="">
-      <input id="input" class="long-input" autocomplete="off" /><button
+      <input id="input" autocomplete="off" maxlength="300" minlength="1" /><button
         id="send-button"
       >
         Send
