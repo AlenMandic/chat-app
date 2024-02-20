@@ -1,86 +1,26 @@
+html {
+  background-color: lightgray;
+}
+
 body {
-  background-color: rgb(105, 96, 96);
-  margin: 10px;
-  padding-bottom: 3rem;
-  font-family: sans-serif;
-}
-
-#form {
-  padding: 0.25rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  font-family: Arial, sans-serif;
   display: flex;
-  height: 3rem;
-  box-sizing: border-box;
-  backdrop-filter: blur(5px);
-}
-
-#input {
-  border: none;
-  padding: 0 1rem;
-  flex-grow: 1;
-  border-radius: 5px;
-  margin: 0.25rem;
-}
-
-.chat-room {
-  height: 575px;
-  width: 100%;
-  word-wrap: break-word;
-  border: solid 1px black;
-  background-color: lightblue;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.chat-room > * {
-  padding: 10px;
-}
-
-#joined-room {
-  margin-left: 10px;
-}
-
-#user-connected {
-  color: #0a470a;
-  margin-left: 10px;
-}
-
-#user-disconnected {
-  color: red;
-  margin-left: 10px;
-}
-
-#input:focus {
-  outline: none;
-}
-
-.form > button {
-  border: solid 1px black;
-  font-size: 18px;
-  padding: 0 1rem;
-  margin: 0.25rem;
-  border-radius: 3px;
-  color: black;
-  width: 120px;
-}
-
-#messages {
-  list-style-type: none;
   margin: 0;
   padding: 0;
+  flex-direction: column;
+  height: 100vh;
 }
 
-#messages > li {
-  padding: 0.5rem 1rem;
+h2,
+h3 {
+  color: black;
+  margin-left: 10px;
 }
 
 #title-select {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  margin-left: 5px;
 }
 
 .room-selector {
@@ -88,34 +28,168 @@ body {
   display: inline-block;
 }
 
-select {
+#roomDropdown {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 15px;
+  padding: 8px;
   font-size: 16px;
-  width: 170px;
-  border-radius: 3px;
+  color: black;
+  border: 1px solid #333;
   background-color: #fff;
-  color: #333;
+  width: 150px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
-select:focus {
+#roomDropdown:focus {
   outline: none;
-  border-color: black;
+  border-color: #007bff; /* Add a focus border color if needed */
 }
 
 .arrow {
   position: absolute;
   top: 50%;
-  right: 30px;
+  right: 20px;
   transform: translateY(-50%);
-  pointer-events: none;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+  cursor: pointer;
 }
 
-.arrow::before {
-  content: "\25BC";
-  font-size: 20px;
-  color: #333;
+.chat-room {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  word-wrap: break-word;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+}
+
+#messages > li {
+  padding-bottom: 2px;
+}
+
+.messageItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: -25px;
+  gap: 5px;
+}
+
+.chatUsername {
+  font-weight: 800;
+  font-size: 17px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.chatMessage {
+  padding-left: 5px;
+}
+
+.concurrent-users-tab {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#onlineUserList > li {
+  display: flex;
+  align-items: center;
+  margin: 20px 25px;
+}
+
+li::before {
+  content: "👤";
+  margin-right: 10px;
+}
+
+#onlineUserList > li::after {
+  content: "";
+  width: 10px; 
+  height: 10px; 
+  border-radius: 50%; 
+  background: rgb(27, 123, 27); 
+  margin-left: 10px;
+}
+
+button {
+  background: #333; 
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer; 
+}
+
+#closeModalButton {
+  margin: 20px 25px;
+}
+
+button:hover {
+  background: #444;
+}
+
+button:active {
+  background: #222; /
+}
+
+.form {
+  display: flex;
+  padding: 10px;
+}
+
+#input {
+  flex-grow: 1;
+  padding: 5px;
+  margin-left: -8px;
+}
+
+#send-button {
+  background: #333; 
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer; 
+}
+
+#send-button:hover {
+  background-color: #444;
 }

@@ -3,10 +3,21 @@
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
-    <title>Socket.IO chat</title>
+    <title>👤 QuickRoom chat</title>
   </head>
   <body>
-    <h2 id="concurrent-users"></h2>
+    <div class="concurrent-users-tab">
+      <h2 id="concurrent-users"></h2>
+      <button id="open-modal">Show users</button>
+      <div id="userListModal" class="modal">
+        <div class="modal-content">
+          <h2>Online Users</h2>
+          <ul id="onlineUserList">
+          </ul>
+          <button id="closeModalButton">Close</button>
+        </div>
+      </div>
+    </div>
     <div id="title-select">
       <h3>Join a different channel</h3>
       <div class="room-selector">
@@ -15,6 +26,8 @@
           <option value="Programming">Programming</option>
           <option value="Football">Football</option>
           <option value="Discussions">Discussions</option>
+          <option value="Reddit">Reddit</option>
+          <option value="Games/LFG">Games/LFG</option>
         </select>
         <div class="arrow"></div>
       </div>
@@ -24,7 +37,7 @@
       <ul id="messages"></ul>
     </div>
     <form id="form" class="form" action="">
-      <input id="input" autocomplete="off" maxlength="300" minlength="1" /><button
+      <input id="input" autocomplete="off" maxlength="100" minlength="1" /><button
         id="send-button"
       >
         Send

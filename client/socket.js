@@ -10,6 +10,22 @@ const concurrentUsers = document.getElementById("concurrent-users");
 const selectChannel = document.getElementById('roomDropdown')
 const channelTitle = document.getElementById('channel-title');
 
+const openModalButton = document.getElementById('open-modal');
+const closeModalButton = document.getElementById('closeModalButton');
+const modal = document.getElementById('userListModal');
+const modalUserList = document.getElementById('onlineUserList');
+
+const userList = new Set();
+
+openModalButton.addEventListener('click', () => {
+  modal.style.display = 'flex';
+  // TODO: Populate the user list dynamically
+});
+
+closeModalButton.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
 channelTitle.textContent = selectChannel.value;
 
 const username = getUsername();
@@ -50,7 +66,23 @@ selectChannel.addEventListener('change', function () {
 });
 
 socket.on('concurrent-users', (data) => {
-  concurrentUsers.textContent = 'Users online:' + " " + data;
+
+  concurrentUsers.textContent = 'Users online:' + " " + data.size;
+
+  modalUserList.innerHTML = '';
+
+  if (data.usernames && data.usernames.length > 0) {
+
+    for (let i = 0; i < data.usernames.length; i++) {
+      const username = data.usernames[i];
+      userList.add(username);
+
+      const userItem = document.createElement('li');
+      userItem.textContent = username;
+      modalUserList.appendChild(userItem);
+    }
+  }
+
 })
 
 socket.on('welcome', (msg) => {
@@ -67,9 +99,23 @@ socket.on('user-connected', (msg) => {
 })
 
 socket.on('chat message', (msg) => {
+  const createUsername = document.createElement('p');
+  createUsername.textContent = `${msg.split(":")[0].trim()}:`;
+  createUsername.setAttribute('class', 'chatUsername');
+
+  const createMessage = document.createElement('p');
+  createMessage.textContent = msg.split(":")[1];
+  createMessage.setAttribute('class', 'chatMessage');
+
   const messageItem = document.createElement("li");
-  messageItem.textContent = `[ ${displayCurrentTime()} ] ${msg}`;
+  messageItem.innerHTML = `[ ${displayCurrentTime()} ]`;
+  messageItem.setAttribute('class', 'messageItem');
+
+  messageItem.appendChild(createUsername);
+  messageItem.appendChild(createMessage);
+
   messages.appendChild(messageItem);
+
   setTimeout(() => {
     chatRoom.scrollTop = chatRoom.scrollHeight;
   }, 50);
@@ -82,9 +128,9 @@ socket.on('joined-room', (msg) => {
   messages.appendChild(joinRoomItem);
 })
 
-socket.on('user-disconnected', (msg) => {
+socket.on('user-disconnected', (disconnectData) => {
   const userDisconnectedItem = document.createElement('h3');
   userDisconnectedItem.setAttribute('id', 'user-disconnected');
-  userDisconnectedItem.textContent = msg;
+  userDisconnectedItem.textContent = disconnectData.message;
   messages.appendChild(userDisconnectedItem);
 })

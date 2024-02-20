@@ -55,7 +55,13 @@ io.on('connection', (socket) => {
         username = clientUsername.username;
 
         connectedUsers.add(username); // add user to the users set.
-        io.emit('concurrent-users', connectedUsers.size); // send the number of concurrent users to the client.
+
+        const userList = {
+            size: connectedUsers.size,
+            usernames: [...connectedUsers] 
+          };
+
+        io.emit('concurrent-users', userList); // send the number of concurrent users to the client.
         socket.emit('welcome', `Welcome, chatting as: ${username}`);
         socket.broadcast.emit('user-connected', `${username} has joined the chat.`);
     })
@@ -79,9 +85,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        io.emit('user-disconnected', `${username} has disconnected.`)
+
+        const disconnectData = {
+            username: username,
+            message: `${username} has disconnected.`
+        }
+
+        io.emit('user-disconnected', disconnectData)
         connectedUsers.delete(username); // remove user from the users set.
-        io.emit('concurrent-users', connectedUsers.size);
+
+        const userList = {
+            size: connectedUsers.size,
+            usernames: [...connectedUsers] 
+          };
+
+        io.emit('concurrent-users', userList);
     });
 })
 
@@ -98,8 +116,6 @@ async function insertMessage(room, username, message) {
                 }
             });
         });
-
-        console.log('countTotalMessages: ', countTotalMessages);
 
         const messageCount = countTotalMessages.count;
 

@@ -1,4 +1,4 @@
-const prefixMinutes = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+const prefixMinutes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 export function displayCurrentTime() {
 
@@ -26,9 +26,22 @@ export function joinRoom(websocket, messagesElement, roomName) {
 
       const domMessages = messages.map((message) => {
 
+        const createUsername = document.createElement('p');
+        createUsername.textContent = `${message.username}:`;
+        createUsername.setAttribute('class', 'chatUsername');
+
+        const createMessage = document.createElement('p');
+        createMessage.textContent = message.message;
+        createMessage.setAttribute('class', 'chatMessage');
+
         const messageElement = document.createElement('li');
         const messageTimestamp = message.timestamp.slice(0, -3);
-        messageElement.innerText = `[ ${messageTimestamp} ] ${message.username}: ${message.message}`;
+  
+        messageElement.innerText = `[ ${messageTimestamp} ] `;
+        messageElement.setAttribute('class', 'messageItem');
+        messageElement.appendChild(createUsername);
+        messageElement.appendChild(createMessage);
+
         return messageElement;
       })
        resolve(domMessages)
