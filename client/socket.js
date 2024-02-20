@@ -1,4 +1,5 @@
 import { displayCurrentTime, joinRoom, getUsername } from "./utils.js";
+
 const socket = io();
 
 const form = document.getElementById("form");
@@ -19,7 +20,6 @@ const userList = new Set();
 
 openModalButton.addEventListener('click', () => {
   modal.style.display = 'flex';
-  // TODO: Populate the user list dynamically
 });
 
 closeModalButton.addEventListener('click', () => {
@@ -54,8 +54,9 @@ form.addEventListener('submit', (e) => {
     setTimeout(() => {
       chatRoom.scrollTop = chatRoom.scrollHeight;
     }, 10);
-    //sendButton.disabled = true;
-    //setTimeout(() => (sendButton.disabled = false), 3000);
+
+    sendButton.disabled = true;
+    setTimeout(() => (sendButton.disabled = false), 3000);
   }
 });
 

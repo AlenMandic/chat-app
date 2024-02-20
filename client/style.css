@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   display: flex;
   margin: 0;
   padding: 0;
@@ -15,6 +15,10 @@ h2,
 h3 {
   color: black;
   margin-left: 10px;
+}
+
+#join-channel-title {
+  margin-left: 5px;
 }
 
 #title-select {
@@ -36,6 +40,7 @@ h3 {
   font-size: 16px;
   color: black;
   border: 1px solid #333;
+  border-radius: 5px;
   background-color: #fff;
   width: 150px;
   cursor: pointer;
@@ -76,6 +81,7 @@ h3 {
 
 #messages > li {
   padding-bottom: 2px;
+  word-break: break-word;
 }
 
 .messageItem {
@@ -83,6 +89,7 @@ h3 {
   align-items: center;
   margin-bottom: -25px;
   gap: 5px;
+  text-wrap: nowrap;
 }
 
 .chatUsername {
@@ -94,6 +101,7 @@ h3 {
 
 .chatMessage {
   padding-left: 5px;
+  word-wrap: break-word;
 }
 
 .concurrent-users-tab {
@@ -156,6 +164,7 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer; 
+  border: 1px solid black;
 }
 
 #closeModalButton {
@@ -192,4 +201,60 @@ button:active {
 
 #send-button:hover {
   background-color: #444;
+}
+
+@media only screen and (max-width: 800px) {
+
+  h2,h3 {
+    font-size: 15px;
+  }
+
+  #roomDropdown {
+    font-size: 13px;
+  }
+
+  #open-modal {
+    height: 30px;
+    padding: 5px 10px;
+  }
+
+  .chatUsername {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .messageItem {
+    font-size: 12px;
+    text-wrap: nowrap;
+  }
+
+}
+
+
+@media only screen and (max-width: 500px) {
+ 
+  h2,h3 {
+    font-size: 11px;
+  }
+
+  #open-modal {
+    height: 20px;
+    padding: 0px 7px;
+  }
+
+  #roomDropdown {
+    font-size: 11px;
+    width: 110px;
+  }
+
+  .chatUsername {
+    font-size: 11px;
+  }
+
+  .messageItem {
+    font-size: 9px;
+    margin-bottom: -20px;
+    text-wrap: nowrap;
+  }
+
 }

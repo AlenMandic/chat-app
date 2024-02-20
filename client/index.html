@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
-    <title>👤 QuickRoom chat</title>
+    <title>👤 QuickRoom Chat</title>
   </head>
   <body>
     <div class="concurrent-users-tab">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div id="title-select">
-      <h3>Join a different channel</h3>
+      <h3 id="join-channel-title">Join a different channel</h3>
       <div class="room-selector">
         <select id="roomDropdown">
           <option value="General chat" selected>General chat</option>
@@ -37,7 +37,7 @@
       <ul id="messages"></ul>
     </div>
     <form id="form" class="form" action="">
-      <input id="input" autocomplete="off" maxlength="100" minlength="1" /><button
+      <input id="input" autocomplete="off" maxlength="200" minlength="1" /><button
         id="send-button"
       >
         Send
