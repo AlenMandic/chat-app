@@ -237,11 +237,6 @@ button:active {
     font-size: 11px;
   }
 
-  #open-modal {
-    height: 20px;
-    padding: 0px 7px;
-  }
-
   #roomDropdown {
     font-size: 11px;
     width: 110px;
@@ -251,8 +246,13 @@ button:active {
     font-size: 11px;
   }
 
+  .chat-room {
+    flex-grow: 0;
+    height: 100%;
+  }
+
   .messageItem {
-    font-size: 9px;
+    font-size: 12px;
     margin-bottom: -20px;
     text-wrap: nowrap;
   }
