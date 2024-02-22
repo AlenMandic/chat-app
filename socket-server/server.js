@@ -9,7 +9,8 @@ const queries = require('./queries.js');
 
 require('dotenv').config()
 
-const dbPath = process.env.DB_PATH
+const dbPath = join(__dirname, 'data', 'chat_app.db');
+console.log(dbPath)
 
 const app = express();
 const server = createServer(app); // Creates a new server instance based on our express app, we can then listen on this server port.
