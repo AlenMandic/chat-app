@@ -34,7 +34,9 @@ const connectedUsers = new Set();
 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
-        console.error('Error connecting to the database file: ', err.message);
+        console.log(err)
+        console.log(dbPath)
+        console.error('Error connecting to the database file: ', err);
     } else {
         console.log(`Connected to the SQLite database`);
         // create the initial DB table if it doesn't already exist, for storing messages.
