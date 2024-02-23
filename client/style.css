@@ -1,5 +1,6 @@
 html {
-  background-color: lightgray;
+  background-color: #3c3c3c;
+  color: white;
 }
 
 body {
@@ -13,8 +14,12 @@ body {
 
 h2,
 h3 {
-  color: black;
+  color: white;
   margin-left: 10px;
+}
+
+#channel-title, #joined-room {
+  color: white;
 }
 
 #join-channel-title {
@@ -25,6 +30,7 @@ h3 {
   display: flex;
   align-items: center;
   margin-left: 5px;
+  color: black;
 }
 
 .room-selector {
@@ -70,8 +76,8 @@ h3 {
   overflow-y: auto;
   padding: 10px;
   border: 1px solid black;
-  background-color: white;
-  word-wrap: break-word;
+  background-color: #121212;
+  color: white;
 }
 
 #messages {
@@ -101,7 +107,6 @@ h3 {
 
 .chatMessage {
   padding-left: 5px;
-  word-wrap: break-word;
 }
 
 .concurrent-users-tab {
@@ -123,12 +128,18 @@ h3 {
 }
 
 .modal-content {
-  background: #fff;
+  background-color: #222;
+  color: white;
   padding: 20px;
   border-radius: 10px;
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#roomDropdown {
+  background-color: #121212;
+  color: white;
 }
 
 ul {
@@ -143,7 +154,7 @@ ul {
   margin: 20px 25px;
 }
 
-li::before {
+#onlineUserList > li::before {
   content: "👤";
   margin-right: 10px;
 }
@@ -164,7 +175,7 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer; 
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 #closeModalButton {
@@ -188,6 +199,9 @@ button:active {
   flex-grow: 1;
   padding: 5px;
   margin-left: -8px;
+  border: 1px solid white;
+  background-color: #222;
+  color: white;
 }
 
 #send-button {
@@ -197,6 +211,7 @@ button:active {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer; 
+  border: 1px solid white;
 }
 
 #send-button:hover {
@@ -230,11 +245,15 @@ button:active {
 
 }
 
-
 @media only screen and (max-width: 500px) {
 
   h2,h3 {
     font-size: 11px;
+  }
+
+  .modal-content > h2 {
+   font-size: 18px;
+   margin-left: 25px; 
   }
 
   #roomDropdown {
