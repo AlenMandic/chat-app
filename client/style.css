@@ -232,7 +232,7 @@ button:active {
 
 
 @media only screen and (max-width: 500px) {
- 
+
   h2,h3 {
     font-size: 11px;
   }
@@ -256,6 +256,7 @@ button:active {
     font-size: 12px;
     margin-bottom: -20px;
     text-wrap: nowrap;
+    gap: 0px;
   }
 
 }
