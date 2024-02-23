@@ -248,7 +248,8 @@ button:active {
 
   .chat-room {
     flex-grow: 0;
-    height: 100%;
+    height: 70%;
+    padding: 0px;
   }
 
   .messageItem {
